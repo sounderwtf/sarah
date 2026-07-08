@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Primer Mes</title>
+    
+    <!-- Librería AOS para animaciones al hacer scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --text-main: #5c1a3b; /* Tono vino/rosado oscuro para el texto */
+            --text-muted: #8c4a68;
+            --card-bg: rgba(255, 255, 255, 0.6); /* Efecto cristal (Glassmorphism) */
+            --card-border: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            margin: 0;
+        }
+
+        h1, h2, h3, .reason-number, .caption, .letter-text {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- FONDO ANIMADO DE OLAS --- */
+        .wave-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(180deg, #fff0f3 0%, #ffccd5 100%);
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ff9eb5" opacity=".6"/></svg>') repeat-x;
+            background-size: 50% 100%;
+            animation: wave-move 12s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 15px;
+            opacity: 0.4;
+            animation: wave-move 18s linear infinite reverse;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 30px;
+            opacity: 0.2;
+            animation: wave-move 25s linear infinite;
+        }
+
+        @keyframes wave-move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- SECCIONES GENERALES --- */
+        section {
+            padding: 120px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .scroll-indicator {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-main);
+            text-decoration: none;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        /* --- ¿CÓMO ME ENAMORÉ DE TI? (6 RAZONES) --- */
+        .grid-reasons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .reason-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px rgba(255, 158, 181, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .reason-number {
+            font-size: 3rem;
+            color: #ff7597;
+            font-style: italic;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .reason-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .reason-card p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* --- GALERÍA --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 15px 15px 25px 15px;
+            box-shadow: 0 15px 35px rgba(138, 74, 104, 0.15);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 4px;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.08) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border: 1px solid #f0f0f0;
+        }
+
+        .caption {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* --- CARTA FINAL --- */
+        .letter-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 60px 50px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px rgba(255, 158, 181, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .letter-text {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            section { padding: 80px 20px; }
+            .letter-container { padding: 40px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo de olas animadas -->
+    <div class="wave-container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Pantalla de Inicio -->
+    <header class="hero">
+        <h1 data-aos="fade-down" data-aos-duration="1500">Feliz primer mes</h1>
+        <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">
+            Esta será nuestra página web, un espacio solamente de nosotros que contendrá todos nuestros recuerdos acerca de nuestra bonita relación.
+        </p>
+        <a href="#historia" class="scroll-indicator" data-aos="zoom-in" data-aos-delay="800">Desliza hacia abajo ↓</a>
+    </header>
+
+    <!-- 6 Razones -->
+    <section id="historia">
+        <h2 class="section-title" data-aos="zoom-in-up">¿Cómo me enamoré de ti?</h2>
+        <div class="grid-reasons">
+            
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="100">
+                <span class="reason-number">01</span>
+                <h3>La primera vez</h3>
+                <p>Ese día en la playa, que fue más que una simple salida, terminamos conociéndonos por completo y pude ser yo mismo sin temor a que te alejaras de mí.</p>
+            </div>
+
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="200">
+                <span class="reason-number">02</span>
+                <h3>Nuestras pláticas</h3>
+                <p>Desde esos días que comenzamos con las llamadas y mensajes más a menudo, se sentía que ibas encajando en mi día a día.</p>
+            </div>
+
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="300">
+                <span class="reason-number">03</span>
+                <h3>Tus ojitos bonitos</h3>
+                <p>Me encantan tus ojos y cada día que los veo sigo pensando que son los que quiero para mis hijos.</p>
+            </div>
+
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="400">
+                <span class="reason-number">04</span>
+                <h3>Los pequeños detalles</h3>
+                <p>Los gestos, los mensajes, las risas por las tonterías que digo y hago... cada pequeño detalle que tienes conmigo me hace sentir amado y valorado.</p>
+            </div>
+
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="500">
+                <span class="reason-number">05</span>
+                <h3>Tu manera de expresar tu amor a traves de tu carrera</h3>
+                <p>Me encanta que a través de ti he podido conocer algo nuevo para mí: el tener una mascota. Amo la manera en la que expresas tu amor por los animales.</p>
+            </div>
+
+            <div class="reason-card" data-aos="fade-up" data-aos-delay="600">
+                <span class="reason-number">06</span>
+                <h3>La paz que me das</h3>
+                <p>Contigo puedo ser yo mismo y hablar de todo lo que siento y cómo lo siento. Genuinamente eres el lugar que más paz me trae; eres mi hogar dentro de todo el caos de mi vida.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Galería -->
+    <section>
+        <h2 class="section-title" data-aos="fade-up">Nuestros Primeros Recuerdos</h2>
+        <div class="gallery-grid">
+            
+            <div class="polaroid" style="transform: rotate(-4deg);" data-aos="fade-right">
+                <img src="imagenes/imagen1.JPEG" alt="Recuerdo 1">
+                <div class="caption">Donde todo empezó</div>
+            </div>
+
+            <div class="polaroid" style="transform: rotate(3deg);" data-aos="zoom-in" data-aos-delay="200">
+                <img src="imagenes/imagen2.JPEG" alt="Recuerdo 2">
+                <div class="caption">Nuestro primer mes</div>
+            </div>
+
+            <div class="polaroid" style="transform: rotate(-2deg);" data-aos="fade-left" data-aos-delay="400">
+                <img src="imagenes/imagen3.JPEG" alt="Recuerdo 3">
+                <div class="caption">Y los que faltan...</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mensaje Final -->
+    <section>
+        <div class="letter-container" data-aos="flip-up" data-aos-duration="1000">
+            <h2 class="section-title" style="margin-bottom: 20px; font-size: 2.2rem;">Para ti...</h2>
+            <p class="letter-text">
+                Mi amor,
+
+                Hoy que cumplimos nuestro primer mes, quería darte algo diferente, algo que se quedara con nosotros. Así que hice este pequeño rincón en internet solo para ti y para mí. 
+
+                Me hace mucha ilusión pensar que a medida que pase el tiempo, podremos ir agregando más razones, más fotos y más recuerdos a esta página. Gracias por este mes tan bonito, por las risas, por la confianza y por hacerme tan feliz.
+
+                Feliz primer mes. ❤️
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Hecho con mucho amor — 7 de Julio de 2026</p>
+    </footer>
+
+    <!-- Script de inicialización de AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, // La animación ocurre solo una vez al hacer scroll
+            offset: 100 // Desplazamiento en px (antes de que la animación se ejecute)
+        });
+    </script>
+</body>
+</html>
